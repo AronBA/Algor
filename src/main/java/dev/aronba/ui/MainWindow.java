@@ -1,15 +1,16 @@
 package dev.aronba.ui;
 
 import com.formdev.flatlaf.intellijthemes.FlatVuesionIJTheme;
-import dev.aronba.ui.view.AlgorithmView;
+import dev.aronba.ui.controller.AlgorithmController;
 import dev.aronba.ui.view.ConfigView;
+import dev.aronba.ui.view.SortAlgorithmView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
     private final ConfigView configView;
-    private AlgorithmView algorithmView;
+    private AlgorithmController algorithmController;
 
     public MainWindow() {
 
@@ -19,12 +20,13 @@ public class MainWindow extends JFrame {
         setLocationRelativeTo(null);
         setSize(100,100);
 
+        this.algorithmController = new AlgorithmController(new SortAlgorithmView());
+
         configView = new ConfigView();
-        configView.getButtonRun().addActionListener(_ -> algorithmView.run(configView.getConfig()));
+        configView.getButtonRun().addActionListener(_ -> algorithmController.startVisualization(configView.getConfig()));
 
-        algorithmView = new AlgorithmView();
 
-        add(algorithmView,BorderLayout.CENTER);
+        add(algorithmController.getView(),BorderLayout.CENTER);
         add(configView,BorderLayout.WEST);
         setVisible(true);
     }

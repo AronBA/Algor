@@ -1,30 +1,35 @@
 package dev.aronba.algorithm;
 
+import dev.aronba.dto.AlgorithmRunConfig;
+
 import javax.swing.*;
 
 public abstract class Algorithm {
+
 
     private int delayMs = 1;
     private int delayNs = 0;
     private JPanel panel;
     private int currentPos = 0;
 
+    public void run(AlgorithmRunConfig algorithmRunConfig){
+        this.delayMs = algorithmRunConfig.delayMs;
+        this.delayNs = algorithmRunConfig.delayNs;
+        this.run(algorithmRunConfig.data);
+    };
+    protected abstract void run(Object object);
 
-    protected void update(int currentPos) {
+    protected void updateAlgorithmView(int currentPos) {
         this.currentPos = currentPos;
-        repaint();
-        pause();
+        this.panel.repaint();
+        pauseAlgorithm();
     }
 
-    private void pause() {
+    private void pauseAlgorithm() {
         try {
             Thread.sleep(delayMs,delayNs);
         } catch (InterruptedException _) {
         }
-    }
-
-    private void repaint() {
-        this.panel.repaint();
     }
 
     public void setDelayMs(int delay) {

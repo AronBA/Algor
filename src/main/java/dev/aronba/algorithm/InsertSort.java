@@ -15,7 +15,7 @@ public class InsertSort extends SortingAlgorithm {
                 data[j + 1] = data[j];
                 j = j - 1;
 
-                update(j + 1);
+                updateAlgorithmView(j + 1);
             }
             data[j + 1] = key;
         }

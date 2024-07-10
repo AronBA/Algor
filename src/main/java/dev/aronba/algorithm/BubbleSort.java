@@ -17,7 +17,7 @@ public class BubbleSort extends SortingAlgorithm {
                     data[j + 1] = temp;
                     swapped = true;
 
-                    this.update(j + 1); // <- important
+                    this.updateAlgorithmView(j + 1); // <- important
                 }
             }
             if (!swapped) {

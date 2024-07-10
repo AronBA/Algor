@@ -3,7 +3,8 @@ package dev.aronba.ui.view;
 import dev.aronba.algorithm.Algorithm;
 import dev.aronba.algorithm.BubbleSort;
 import dev.aronba.algorithm.InsertSort;
-import dev.aronba.dto.Config;
+import dev.aronba.algorithm.SortingAlgorithm;
+import dev.aronba.dto.AlgorithmRunConfig;
 
 import javax.swing.*;
 import java.util.*;
@@ -20,7 +21,7 @@ public class ConfigView extends JPanel {
     private JRadioButton bestCase;
     private JRadioButton worstCase;
 
-    ConfigView() {
+    public ConfigView() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.buttonRun = new JButton("Run");
@@ -82,13 +83,13 @@ public class ConfigView extends JPanel {
     }
 
 
-    public Config getConfig() {
-        Config config = new Config();
+    public AlgorithmRunConfig getConfig() {
+        AlgorithmRunConfig algorithmRunConfig = new AlgorithmRunConfig();
         String number = String.valueOf(spinnerDelay.getValue());
         String numberString = String.valueOf(number);
-        config.delayMs = Integer.parseInt(numberString.substring(0, numberString.indexOf(".")));
-        config.delayNs = Integer.parseInt(numberString.substring(numberString.indexOf(".") + 1));
-        config.algorithm = (Algorithm) algorithmDropdown.getSelectedItem();
+        algorithmRunConfig.delayMs = Integer.parseInt(numberString.substring(0, numberString.indexOf(".")));
+        algorithmRunConfig.delayNs = Integer.parseInt(numberString.substring(numberString.indexOf(".") + 1));
+        algorithmRunConfig.algorithm = (SortingAlgorithm) algorithmDropdown.getSelectedItem();
 
 
         int p1 = (int) this.spinnerDataSize.getValue();
@@ -97,14 +98,14 @@ public class ConfigView extends JPanel {
         int p2 = (int) (p1 * chanceDecimal);
 
         if (bestCase.isSelected()) {
-            config.data = generateSorted(p1, p2);
+            algorithmRunConfig.data = generateSorted(p1, p2);
         } else if (worstCase.isSelected()) {
-            config.data = generateUnsorted(p1, p2);
+            algorithmRunConfig.data = generateUnsorted(p1, p2);
         } else {
-            config.data = generateNumbers(p1, p2);
+            algorithmRunConfig.data = generateNumbers(p1, p2);
         }
 
-        return config;
+        return algorithmRunConfig;
     }
 
     public JButton getButtonRun() {
