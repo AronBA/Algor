@@ -1,50 +1,66 @@
 package dev.aronba.algorithm;
 
-import dev.aronba.dto.AlgorithmRunConfig;
+import dev.aronba.util.Numbers;
+import dev.aronba.util.StopWatch;
 
 import javax.swing.*;
 
 public abstract class Algorithm {
 
+    private int[] array;
+    private int currentPosInArray;
+    private double pauseMs = 1.000;
+    private JPanel panelReference;
+    private StopWatch stopWatch;
 
-    private int delayMs = 1;
-    private int delayNs = 0;
-    private JPanel panel;
-    private int currentPos = 0;
-
-    public void run(AlgorithmRunConfig algorithmRunConfig){
-        this.delayMs = algorithmRunConfig.delayMs;
-        this.delayNs = algorithmRunConfig.delayNs;
-        this.run(algorithmRunConfig.data);
-    };
-    protected abstract void run(Object object);
-
-    protected void updateAlgorithmView(int currentPos) {
-        this.currentPos = currentPos;
-        this.panel.repaint();
-        pauseAlgorithm();
+    public void start() {
+        this.stopWatch = new StopWatch();
+        stopWatch.start();
+        sort(this.array);
+        stopWatch.stop();
     }
 
-    private void pauseAlgorithm() {
+    public abstract void sort(int[] array);
+
+    protected void increment(int currentPosInArray) {
+        this.currentPosInArray = currentPosInArray;
+        panelReference.repaint();
+        pauseExecution();
+    }
+
+    private void pauseExecution() {
+        int ms = Numbers.getBeforeFloatingPoint(this.pauseMs);
+        int ns = Numbers.getAfterFloatingPoint(this.pauseMs);
         try {
-            Thread.sleep(delayMs,delayNs);
+            Thread.sleep(ms, ns);
         } catch (InterruptedException _) {
         }
     }
 
-    public void setDelayMs(int delay) {
-        this.delayMs = delay;
+    public int[] getArray() {
+        return array;
     }
 
-    public int getCurrentPos() {
-        return currentPos;
+    public void setArray(int[] array) {
+        this.array = array;
     }
 
-    public void setPanel(JPanel panel) {
-        this.panel = panel;
+    public int getCurrentPosInArray() {
+        return currentPosInArray;
     }
 
-    public void setDelayNs(int delayNs) {
-        this.delayNs = delayNs;
+
+    public void setPauseMs(double pauseMs) {
+        this.pauseMs = pauseMs;
+    }
+
+
+    public void setPanelReference(JPanel panelReference) {
+        this.panelReference = panelReference;
+    }
+
+
+    public StopWatch getStopWatch() {
+        return this.stopWatch;
     }
 }

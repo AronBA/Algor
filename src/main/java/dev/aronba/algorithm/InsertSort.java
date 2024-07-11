@@ -1,7 +1,8 @@
 package dev.aronba.algorithm;
 
 
-public class InsertSort extends SortingAlgorithm {
+
+public class InsertSort extends Algorithm {
 
     @Override
     public void sort(int[] data) {
@@ -15,7 +16,7 @@ public class InsertSort extends SortingAlgorithm {
                 data[j + 1] = data[j];
                 j = j - 1;
 
-                updateAlgorithmView(j + 1);
+                increment(j + 1);
             }
             data[j + 1] = key;
         }
