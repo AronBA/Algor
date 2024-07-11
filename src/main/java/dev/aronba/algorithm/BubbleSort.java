@@ -1,7 +1,7 @@
 package dev.aronba.algorithm;
 
+public class BubbleSort extends Algorithm {
 
-public class BubbleSort extends SortingAlgorithm {
 
     public void sort(int[] data) {
         int n = data.length;
@@ -17,7 +17,7 @@ public class BubbleSort extends SortingAlgorithm {
                     data[j + 1] = temp;
                     swapped = true;
 
-                    this.updateAlgorithmView(j + 1); // <- important
+                    this.increment(j + 1); // <- important
                 }
             }
             if (!swapped) {
