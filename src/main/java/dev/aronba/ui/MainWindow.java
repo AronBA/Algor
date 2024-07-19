@@ -9,8 +9,6 @@ public class MainWindow extends JFrame {
 
 
     public MainWindow() {
-
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Algor");
         setSize(400, 400);

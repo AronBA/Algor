@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class VisualizationFrame extends JFrame {
 
-    MetricPanel metricPanel;
     VisualizationPanel visualizationPanel;
      Algorithm algorithm;
     RunConfig config;
@@ -23,10 +22,6 @@ public class VisualizationFrame extends JFrame {
         this.setVisible(true);
         this.visualizationPanel = new VisualizationPanel(algorithm,config);
         this.add(visualizationPanel,BorderLayout.CENTER);
-
-        this.metricPanel = new MetricPanel(algorithm);
-        this.add(metricPanel,BorderLayout.WEST);
-
 
         Thread t = new Thread(this::visualize);
         t.start();

@@ -11,6 +11,7 @@ import dev.aronba.util.ShuffleType;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class SettingPanel extends JPanel {
     private final JComboBox<Algorithm> algorithmSelect;
@@ -18,6 +19,7 @@ public class SettingPanel extends JPanel {
     private final JComboBox<ShuffleType> shuffleSelect;
     private final JButton visualize;
     private final JSpinner delay;
+    private VisualizationFrame currentVisualization;
 
     SettingPanel(){
         this.setLayout(new GridBagLayout());
@@ -95,11 +97,12 @@ public class SettingPanel extends JPanel {
     }
 
     private void startVisualization(ActionEvent actionEvent) {
-        new VisualizationFrame((Algorithm) this.algorithmSelect.getSelectedItem(),getRunConfig());
+        if (currentVisualization != null) currentVisualization.dispose();
+        this.currentVisualization =  new VisualizationFrame((Algorithm) this.algorithmSelect.getSelectedItem(),getRunConfig());
     }
 
     private RunConfig getRunConfig() {
-        return new RunConfig((double)delay.getValue(), Numbers.getShuffledArray((ShuffleType) shuffleSelect.getSelectedItem(),0,arraySize.getValue(),arraySize.getValue()));
+        return new RunConfig((double)delay.getValue(), Numbers.getShuffledArray((ShuffleType) Objects.requireNonNull(shuffleSelect.getSelectedItem()),0,arraySize.getValue(),arraySize.getValue()));
     }
 
 }
